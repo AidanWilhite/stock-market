@@ -58,7 +58,7 @@ if __name__ == "__main__":
     for i in range(len(X_DATA_LIST)):
         Y_DATA_LIST.insert(i, float(i))
 
-    Work([0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 5], Depth=Stockdepth)
+    Work([1, 2, 3], [1, 2, 3], Depth=Stockdepth)
 
     #print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
     #print("IQR Score : " + str(LinReg.GetInterRange()))

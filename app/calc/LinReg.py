@@ -34,16 +34,16 @@ def SetLinearReg(x, y):
 
         En_y += y[i]
 
-        for j in range(lenX):
-            SqEn_xy += i * j
-            EnSq_x += i * j
+        # for j in range(lenY):
+        SqEn_xy += x[i] * y[i]
+        EnSq_x += x[i] ** 2
 
-    d = (DataP * SqEn_xy) - (En_x * En_y)
-    n = (DataP * EnSq_x) - ((En_x) ** 2)
+    d = (SqEn_xy) - ((En_x * En_y) / DataP)
+    n = (EnSq_x) - (((En_x) ** 2) / DataP)
     # Go through all points on predicted line and all points on real line and see how close they are
 
     Results.append((d/n))
-    Results.append((En_y - (Slope * En_x)) / DataP)
+    Results.append((En_y - (Results[0] * En_x)) / DataP)
 
     R = 0.
 
