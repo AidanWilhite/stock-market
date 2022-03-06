@@ -2,9 +2,11 @@
 import cProfile
 import math
 from re import I
-from tkinter import Canvas, Tk
-from lib.FormatStockData import FormatStockDataToNum
-from lib.calc import LinReg
+from tkinter import Y, Canvas, Tk
+from app.Workers.LinRegWorkers import Work
+from app.FormatStockData import FormatStockDataToNum
+from app.calc import LinReg
+import app.calc.LinReg
 
 
 def create_circle(x, y, r, canvasName, color):  # center coordinates, radius
@@ -56,7 +58,7 @@ if __name__ == "__main__":
     for i in range(len(X_DATA_LIST)):
         Y_DATA_LIST.insert(i, float(i))
 
-    LinReg.SetLinearReg(Y_DATA_LIST, X_DATA_LIST)
+    Work([0, 1, 2, 3, 4], [0, 1, 2, 3, 4], Depth=Stockdepth)
 
     #print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
     #print("IQR Score : " + str(LinReg.GetInterRange()))

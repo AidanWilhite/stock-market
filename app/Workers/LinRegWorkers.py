@@ -1,9 +1,9 @@
 
-from concurrent.futures import thread
-from re import L
 import sys
 import time
 import threading
+
+from ..calc.LinReg import SetLinearReg, GetReg
 
 # TODO add tasks for the bot to do
 
@@ -16,11 +16,13 @@ class LinWorker():
         self.FragCatch = FragCatch  # what fragment of the data is this worker getting
         self.Name = Name  # what is their name?
         self.Working = False
-        self.TotalTime = time.time()
+        self.TotalTime = 0
+        self.LinDataCache = [0, 0, 0, 0, 0]
 
     def BeginTask(self):
 
         self.Working = True
+        self.TotalTime = time.time()
         Log = threading.Thread(target=self.LogProgress)
         Log.start()
 
@@ -34,7 +36,9 @@ class LinWorker():
             f"{self.Name} Completed Frag {self.FragCatch} in {self.TotalTime} ================ Answer : {RetVal}")
 
     def Task(self):
-        return self.XDat + self.YDat
+
+        # self.LinDataCache =
+        return GetReg(0, SetLinearReg(self.XDat, self.YDat))
 
     def LogProgress(self):
 
@@ -53,7 +57,7 @@ class LinWorker():
                     sys.stdout.write(
                         f'\r{self.Name} Finding Frag {self.FragCatch} ' + f)
                     sys.stdout.flush()
-                    time.sleep(0.25)
+                    time.sleep(0.1)
 
 
 class LinRegWork():
@@ -65,18 +69,17 @@ class LinRegWork():
 
         for work in self.Workers:
 
-            # waits for the current worker to return
             work.BeginTask()
 
 
-if __name__ == "__main__":
-    # AnimateLoadingbar("Loading")
+def Work(x, y, Depth):
 
     l = LinRegWork(Workers=[
-        LinWorker(1, 2, 0, "Fred"),
-        LinWorker(1, 1, 0, "Ted"),
-        LinWorker(1, 3, 0, "Bill")
+        LinWorker(x, y, 0, "Patric"),
     ]
     )
 
     l.Start()
+
+
+# just in case i want to test from here to see if things are working proporly
