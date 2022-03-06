@@ -44,21 +44,21 @@ def MakeGraph(Dat_x, Dat_y, XHigh, YHigh):
 
 if __name__ == "__main__":
 
-    Stockdepth = 12
+    Stockdepth = 1
     SmallIterationlength = 1
     ticker = "AAPL"
 
     StockData = FormatStockDataToNum(ticker, Stockdepth)
 
-    X_DATA_LIST = [x for x in StockData if math.isnan(x) == False]
-    Y_DATA_LIST = []
+    X_DATA_LIST = []
+    Y_DATA_LIST = [x for x in StockData if math.isnan(x) == False]
 
-    X_DATA_LIST.reverse
+    Y_DATA_LIST.reverse
 
-    for i in range(len(X_DATA_LIST)):
-        Y_DATA_LIST.insert(i, float(i))
+    for i in range(len(Y_DATA_LIST)):
+        X_DATA_LIST.append(i)
 
-    Work([1, 2, 3], [1, 2, 3], Depth=Stockdepth)
+    Work(X_DATA_LIST, Y_DATA_LIST, Depth=Stockdepth)
 
     #print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
     #print("IQR Score : " + str(LinReg.GetInterRange()))

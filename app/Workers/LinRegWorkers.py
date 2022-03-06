@@ -38,7 +38,7 @@ class LinWorker():
     def Task(self):
 
         # self.LinDataCache =
-        return GetReg(0, SetLinearReg(self.XDat, self.YDat))
+        return GetReg(len(self.XDat) + 1, SetLinearReg(self.XDat, self.YDat))
 
     def LogProgress(self):
 
