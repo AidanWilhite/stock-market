@@ -1,6 +1,4 @@
 
-from audioop import reverse
-import math
 from statistics import mean
 import warnings
 
