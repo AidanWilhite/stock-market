@@ -1,0 +1,39 @@
+
+TODO See how a certain prediction can give us "bits" of data
+
+
+    Calculate How Much Data we had in the first place
+
+        Use our makeshift variance level to see how much the data should move up or down
+
+
+    See witch linier regression gives us the most data
+
+    Calculate linier regression over small portions of time that get tested to the future
+
+        
+=====================================================
+
+        STASH
+
+=====================================================
+
+def animate():
+
+        AnimationFrames = [
+            "/",
+            "-",
+            "\\",
+            "|"
+        ]
+
+        while done is False:
+            for c in AnimationFrames:
+                if done is True:
+                    Finish()
+                    break
+                else:
+                    sys.stdout.write('\rloading ' + c)
+                    sys.stdout.flush()
+                    time.sleep(0.25)
+        Finish()

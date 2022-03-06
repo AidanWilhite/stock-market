@@ -42,26 +42,23 @@ def MakeGraph(Dat_x, Dat_y, XHigh, YHigh):
 
 if __name__ == "__main__":
 
-    depth = 5
+    Stockdepth = 12
+    SmallIterationlength = 1
     ticker = "AAPL"
 
-    StockData = FormatStockDataToNum(ticker, depth)
+    StockData = FormatStockDataToNum(ticker, Stockdepth)
 
     X_DATA_LIST = [x for x in StockData if math.isnan(x) == False]
     Y_DATA_LIST = []
 
     X_DATA_LIST.reverse
 
-    # TODO Validate The Prediction
-    # We can Check Monthly and see how much info we get
-    # How much info do we have?
-
     for i in range(len(X_DATA_LIST)):
         Y_DATA_LIST.insert(i, float(i))
 
     LinReg.SetLinearReg(Y_DATA_LIST, X_DATA_LIST)
 
-    print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
-    print("IQR Score : " + str(LinReg.GetInterRange()))
+    #print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
+    #print("IQR Score : " + str(LinReg.GetInterRange()))
 
-    MakeGraph(X_DATA_LIST, Y_DATA_LIST, max(X_DATA_LIST), max(Y_DATA_LIST))
+    #MakeGraph(X_DATA_LIST, Y_DATA_LIST, max(X_DATA_LIST), max(Y_DATA_LIST))
