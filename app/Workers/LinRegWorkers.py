@@ -74,8 +74,15 @@ class LinRegWork():
 
 def Work(x, y, Depth):
 
+    # TODO Split the data between 2 bots patric and Zoe and have them complete 2 diffrant modles of lin reg and compare them
+
+    MidX = round(len(x) / 2)
+    MidY = round(len(y) / 2)
+
     l = LinRegWork(Workers=[
-        LinWorker(x, y, 0, "Patric"),
+        LinWorker(x[MidX:], y[MidY:], 1.1, "Aidan"),
+        LinWorker(x[:MidX], y[:MidY], 1.2, "Katie"),
+        LinWorker(x, y, 0, ""),
     ]
     )
 

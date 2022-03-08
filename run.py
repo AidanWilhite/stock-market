@@ -44,8 +44,8 @@ def MakeGraph(Dat_x, Dat_y, XHigh, YHigh):
 
 if __name__ == "__main__":
 
-    Stockdepth = 1
-    SmallIterationlength = 1
+    Stockdepth = 2
+    #SmallIterationlength = 1
     ticker = "AAPL"
 
     StockData = FormatStockDataToNum(ticker, Stockdepth)
