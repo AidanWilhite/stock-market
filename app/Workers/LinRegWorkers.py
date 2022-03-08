@@ -80,9 +80,9 @@ def Work(x, y, Depth):
     MidY = round(len(y) / 2)
 
     l = LinRegWork(Workers=[
-        LinWorker(x[MidX:], y[MidY:], 1.1, "Aidan"),
-        LinWorker(x[:MidX], y[:MidY], 1.2, "Katie"),
-        LinWorker(x, y, 0, ""),
+        LinWorker(x[MidX:], y[MidY:], 1.1, "Mykale"),
+        LinWorker(x[:MidX], y[:MidY], 1.2, "Del"),
+        LinWorker(x, y, 0, "Zat"),
     ]
     )
 
