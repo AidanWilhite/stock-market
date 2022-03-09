@@ -56,10 +56,9 @@ def AddFile(ticker):
 def CheckDataBase(ticker, depth):
 
     if os.path.exists(f'app/data/database/{ticker}.txt') is False:
-        print("Making Data File")
+        print("Storing Data In New File")
         AddFile(ticker)
-        print("Getting Data")
         return RetrieveData(f'app/data/database/{ticker}.txt', depth)
     else:
-        print("File Found, retrieving data")
+        print(f"{ticker} Found In Database, retrieving data")
         return RetrieveData(f'app/data/database/{ticker}.txt', depth)
