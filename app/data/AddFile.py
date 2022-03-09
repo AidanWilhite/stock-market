@@ -1,5 +1,10 @@
 
 import os
+import numpy
+
+import yfinance
+
+#from app.data.FormatStockData import FormatStockDataToNum
 
 
 def CheckForRecursion(ticker):
@@ -10,6 +15,7 @@ def RetrieveData(file, depth):
 
     depthCounter = 0
     lines = []
+    SelectedData = []
 
     with open(file) as f:
 
@@ -18,11 +24,26 @@ def RetrieveData(file, depth):
         # look through
 
     for line in lines:
-        pass
+        # TODO look through data until we find :# and log the number we find inside
+        if line[0] == ":" and int(line[1]) == depth:
+            print(SelectedData)
+            break
+        else:
+            if line[0] != ":" and line[0] != "=":
+                print(line)
+                SelectedData.append(line)
 
 
 def AddFile(ticker):
-    pass
+    with open(f'app/data/database/{ticker}.txt', 'w') as f:
+        # TODO get yahoo finance to write some data to this file and we are good to go!
+        Data = (yfinance.Ticker("AAPL").history(
+            period='32mo')).get("Close").to_numpy()
+
+        Data = numpy.flipud(Data)
+
+        for i in Data:
+            f.write(f'{i}\n')
 
 
 def AddData(FileName):
@@ -33,10 +54,10 @@ def CheckDataBase(ticker, depth):
 
     if os.path.exists(f'app/data/database/{ticker}.txt') is False:
         print("Making Data File")
+        AddFile(ticker)
     else:
         print("File Found, retrieving data")
         RetrieveData(f'app/data/database/{ticker}.txt', depth)
-        # TODO Crawl through the file and return the data
 
 
 if __name__ == '__main__':
