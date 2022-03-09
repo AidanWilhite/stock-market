@@ -1,4 +1,5 @@
 
+from functools import cache
 from statistics import mean
 import warnings
 
@@ -71,9 +72,12 @@ def GetReg(y, CurrentData):
 def FindInterRange(d):  # thanks to https://www.geeksforgeeks.org/interquartile-range-and-quartile-deviation-using-numpy-and-scipy/ for this
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=RuntimeWarning)
-        Q1 = np.median(d[:10])
 
-        Q3 = np.median(d[10:])
+        half = round(len(d)/2)
+
+        Q1 = np.median(d[:half])
+
+        Q3 = np.median(d[half:])
 
         IQR = abs(Q1 - Q3)
 
