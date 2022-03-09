@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     Stockdepth = 1
     SmallIterationlength = 1
-    ticker = "AAPL"
+    ticker = "AAMZ"
 
     StockData = FormatStockDataToNum(ticker, Stockdepth)
 
