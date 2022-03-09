@@ -42,8 +42,19 @@ def AddFile(ticker):
 
         Data = numpy.flipud(Data)
 
+        l = 0
+        bench = round(len(Data) / 32)
+        point = bench
+        MonInc = 1
+
         for i in Data:
-            f.write(f'{i}\n')
+            if l == point:
+                f.write(f':{MonInc}\n')
+                MonInc += 1
+                point += bench
+            else:
+                f.write(f'{i}\n')
+                l = l+1
 
 
 def AddData(FileName):
