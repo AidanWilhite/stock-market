@@ -4,9 +4,9 @@ import math
 from re import I
 from tkinter import Y, Canvas, Tk
 from app.Workers.LinRegWorkers import Work
-from app.FormatStockData import FormatStockDataToNum
 from app.calc import LinReg
 import app.calc.LinReg
+from app.data.dataBase import CheckDataBase
 
 
 def create_circle(x, y, r, canvasName, color):  # center coordinates, radius
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     #SmallIterationlength = 1
     ticker = "AAPL"
 
-    StockData = FormatStockDataToNum(ticker, Stockdepth)
+    StockData = CheckDataBase(ticker, Stockdepth)
 
     X_DATA_LIST = []
     Y_DATA_LIST = [x for x in StockData if math.isnan(x) == False]
