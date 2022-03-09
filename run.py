@@ -4,7 +4,7 @@ import math
 from re import I
 from tkinter import Y, Canvas, Tk
 from app.Workers.LinRegWorkers import Work
-from app.FormatStockData import FormatStockDataToNum
+from app.data.FormatStockData import FormatStockDataToNum
 from app.calc import LinReg
 import app.calc.LinReg
 
