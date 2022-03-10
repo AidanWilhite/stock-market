@@ -1,13 +1,15 @@
 
+from datetime import datetime
 import os
+from time import time
 import numpy
 
 import yfinance
 
-#from app.data.FormatStockData import FormatStockDataToNum
 
-
-def CheckForRecursion(ticker):
+def RenewDataBase():
+    # TODO Add to the file
+    # we could rewrite the whole file
     pass
 
 
@@ -18,10 +20,21 @@ def RetrieveData(file, depth):
     SelectedData = []
 
     with open(file) as f:
-
         lines = f.readlines()
 
-        # look through
+    lines[0].strip()
+
+    # look through
+#'March 09, 2022\n' 'March 09, 2022\n'
+    # TODO check if the data needs to be renewed
+
+    t = str(lines[0])
+    ct = str(datetime.today().strftime("%B %d, %Y") + "\n")
+
+    if t is not ct:
+        print(datetime.today().strftime("%B %d, %Y").strip() +
+              " : " + str(lines[0].strip()))
+        print("Renewing Database")
 
     for line in lines:
         if line[0] == ":" and int(line[1]) == depth:
@@ -43,6 +56,8 @@ def AddFile(ticker):
         point = bench
         MonInc = 1
 
+        f.write(f'={datetime.today().strftime("%B %d, %Y")}')
+
         for i in Data:
             if l == point:
                 f.write(f':{MonInc}\n')
@@ -62,3 +77,7 @@ def CheckDataBase(ticker, depth):
     else:
         print(f"{ticker} Found In Database, retrieving data")
         return RetrieveData(f'app/data/database/{ticker}.txt', depth)
+
+
+if __name__ == '__main__':
+    CheckDataBase('AAPL', 3)
