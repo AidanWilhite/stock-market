@@ -28,12 +28,11 @@ def RetrieveData(file, depth):
 #'March 09, 2022\n' 'March 09, 2022\n'
     # TODO check if the data needs to be renewed
 
-    t = str(lines[0])
-    ct = str(datetime.today().strftime("%B %d, %Y") + "\n")
+    t = str(lines[0].strip())
+    ct = str(datetime.today().strftime("%B %d, %Y").strip())
 
-    if t is not ct:
-        print(datetime.today().strftime("%B %d, %Y").strip() +
-              " : " + str(lines[0].strip()))
+    if t != ct:
+        print(t + " : " + ct)
         print("Renewing Database")
 
     for line in lines:
