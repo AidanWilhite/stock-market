@@ -13,7 +13,7 @@ def RenewDataBase():
     pass
 
 
-def RetrieveData(file, depth):
+def RetrieveData(file, depth, ticker):
 
     depthCounter = 0
     lines = []
@@ -24,28 +24,31 @@ def RetrieveData(file, depth):
 
     lines[0].strip()
 
-    # look through
-#'March 09, 2022\n' 'March 09, 2022\n'
-    # TODO check if the data needs to be renewed
-
     t = str(lines[0].strip())
     ct = str(datetime.today().strftime("%B %d, %Y").strip())
 
     if t != ct:
-        print(t + " : " + ct)
-        print("Renewing Database")
+        print("Rewriting Database")
+        with open(f'app/data/database/{ticker}.txt', 'r+') as f:
+            data = yfinance.Ticker(ticker).history(
+                period='32mo').get("Close").to_numpy()
+            content = numpy.flipud(data)[0]
+            line = datetime.today().strftime("%B %d, %Y").strip()
+
+            f.seek(0, 0)
+            f.write(line.rstrip('\r\n') + '\n' + str(content))
 
     for line in lines:
         if line[0] == ":" and int(line[1]) == depth:
             return SelectedData
         else:
-            if line[0] != ":" and line[0] != "=":
+            if line[0] != ":" and line[0] != "=" and line != lines[0]:
                 SelectedData.append(float(line))
 
 
 def AddFile(ticker):
     with open(f'app/data/database/{ticker}.txt', 'w') as f:
-        Data = (yfinance.Ticker("AAPL").history(
+        Data = (yfinance.Ticker(ticker).history(
             period='32mo')).get("Close").to_numpy()
 
         Data = numpy.flipud(Data)
@@ -75,7 +78,7 @@ def CheckDataBase(ticker, depth):
         return RetrieveData(f'app/data/database/{ticker}.txt', depth)
     else:
         print(f"{ticker} Found In Database, retrieving data")
-        return RetrieveData(f'app/data/database/{ticker}.txt', depth)
+        return RetrieveData(f'app/data/database/{ticker}.txt', depth, ticker)
 
 
 if __name__ == '__main__':
