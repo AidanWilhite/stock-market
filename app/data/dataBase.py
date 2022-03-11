@@ -1,5 +1,5 @@
 
-from datetime import datetime
+from datetime import date, datetime
 import os
 from time import time
 import numpy
@@ -25,15 +25,31 @@ def RetrieveData(file, depth, ticker):
     lines[0].strip()
 
     t = str(lines[0].strip())
-    ct = str(datetime.today().strftime("%B %d, %Y").strip())
+    ct = str(datetime.today().strftime("%Y,%m,%d").strip())
+    print(f'{t} : {ct}')
 
     if t != ct:
         print("Rewriting Database")
         with open(f'app/data/database/{ticker}.txt', 'r+') as f:
             data = yfinance.Ticker(ticker).history(
                 period='32mo').get("Close").to_numpy()
-            content = numpy.flipud(data)[0]
-            line = datetime.today().strftime("%B %d, %Y").strip()
+            # TODO find the diffrence in days from the time in the txt file to the time now
+
+            pd = lines[0].split(',')
+            d = datetime.today().strftime("%Y,%m,%d").strip()
+            cd = d.split(',')
+
+            dif = date(int(cd[0]), int(cd[1]), int(cd[2])) - \
+                date(int(pd[0]), int(pd[1]), int(pd[2]))
+
+            IndexData = numpy.flipud(data)[:dif.days]
+            StrData = []
+
+            for i in IndexData:
+                StrData.append('\n' + str(i).rstrip('\r\n'))
+
+            content = f'{StrData}'
+            line = datetime.today().strftime("%Y,%m,%d").strip()
 
             f.seek(0, 0)
             f.write(line.rstrip('\r\n') + '\n' + str(content))
@@ -58,7 +74,7 @@ def AddFile(ticker):
         point = bench
         MonInc = 1
 
-        f.write(f'={datetime.today().strftime("%B %d, %Y")}')
+        f.write(f'={datetime.today().strftime("%Y,%m,%d")}')
 
         for i in Data:
             if l == point:
