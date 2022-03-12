@@ -10,6 +10,7 @@ def evalWork(l):
         Weight = 1  # print(w.SolCache[5])
 
         a += (w.sol * Weight)
+
     a = a/len(l.Workers)
 
     return a
