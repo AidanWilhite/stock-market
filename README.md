@@ -47,7 +47,3 @@ Make sure you keep the 'Quotation marks'
 python run.py 'TICKER' 'DEPTH'
 ```
 
-### Disclaimers
-
-I have not gotten around to adding a ui. So for now, 
-enjoy some apple stock :)
