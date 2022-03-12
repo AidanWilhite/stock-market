@@ -6,7 +6,7 @@ from tkinter import Y, Canvas, Tk
 from app.Workers.LinRegWorkers import Work
 from app.calc import LinReg
 import app.calc.LinReg
-from app.data.dataBase import CheckDataBase
+from app.data import getData
 
 
 def create_circle(x, y, r, canvasName, color):  # center coordinates, radius
@@ -45,10 +45,9 @@ def MakeGraph(Dat_x, Dat_y, XHigh, YHigh):
 if __name__ == "__main__":
 
     Stockdepth = 2
-    #SmallIterationlength = 1
     ticker = "AAPL"
 
-    StockData = CheckDataBase(ticker, Stockdepth)
+    StockData = getData(ticker, Stockdepth)
 
     X_DATA_LIST = []
     Y_DATA_LIST = [x for x in StockData if math.isnan(x) == False]
@@ -58,9 +57,6 @@ if __name__ == "__main__":
     for i in range(len(Y_DATA_LIST)):
         X_DATA_LIST.append(i)
 
-    Work(X_DATA_LIST, Y_DATA_LIST, Depth=Stockdepth)
-
-    #print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
-    #print("IQR Score : " + str(LinReg.GetInterRange()))
-
-    #MakeGraph(X_DATA_LIST, Y_DATA_LIST, max(X_DATA_LIST), max(Y_DATA_LIST))
+    print(f'Answer : {Work(X_DATA_LIST, Y_DATA_LIST, Depth=Stockdepth)}')
+    # Check wether we are accurate or not
+    # only send data with one value missing from the end

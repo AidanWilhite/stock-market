@@ -1,4 +1,5 @@
 
+from cmath import sqrt
 from functools import cache
 from statistics import mean
 import warnings
@@ -12,6 +13,7 @@ def SetLinearReg(x, y):
 
     En_x = 0.
     EnSq_x = 0.
+    EnSq_y = 0.
 
     En_y = 0.
 
@@ -36,6 +38,7 @@ def SetLinearReg(x, y):
         # for j in range(lenY):
         SqEn_xy += x[i] * y[i]
         EnSq_x += x[i] ** 2
+        EnSq_y += y[i] ** 2
 
     d = (SqEn_xy) - ((En_x * En_y) / DataP)
     n = (EnSq_x) - (((En_x) ** 2) / DataP)
@@ -44,15 +47,16 @@ def SetLinearReg(x, y):
     Results.append((d/n))
     Results.append((En_y - (Results[0] * En_x)) / DataP)
 
-    R = 0.
-
-    for Dy in range(lenY):
-        R += abs(y[Dy] - GetReg(Dy, Results))
-        #print(abs(y[Dy] - GetReg(Dy)))
+    r = 0.
+    top = DataP * (SqEn_xy) - (En_x) * (En_y)
+    bottom = sqrt((DataP * (EnSq_x) - (En_x) ** 2)
+                  * (DataP * (EnSq_y - (En_y) ** 2)))
+    r = top/bottom
 
     Results.append(FindInterRange(y))
     Results.append(lenY)
     Results.append(mean(y))
+    Results.append(r)
 
     return Results
 
