@@ -12,7 +12,7 @@ from ..calc.LinReg import SetLinearReg, GetReg
 
 class LinWorker():
 
-    def __init__(self, XDat, YDat, FragCatch, Name):
+    def __init__(self, XDat, YDat, FragCatch, Name, pX):
         self.XDat = XDat  # x data to evaluate
         self.YDat = YDat  # y data to evaluate
         self.FragCatch = FragCatch  # what fragment of the data is this worker getting
@@ -21,6 +21,8 @@ class LinWorker():
         self.TotalTime = 0
         self.LinDataCache = [0, 0, 0, 0, 0]
         self.sol = 0
+        self.SolCache = []
+        self.Px = pX
 
     def BeginTask(self):
 
@@ -42,7 +44,9 @@ class LinWorker():
     def Task(self):
 
         # self.LinDataCache =
-        return GetReg(len(self.XDat) + 1, SetLinearReg(self.XDat, self.YDat))
+        lin = SetLinearReg(self.XDat, self.YDat)
+        self.SolCache = lin
+        return GetReg(self.Px + 1, lin)
 
     def LogProgress(self):
 
@@ -80,13 +84,22 @@ def Work(x, y, Depth):
 
     # TODO Split the data between 2 bots patric and Zoe and have them complete 2 diffrant modles of lin reg and compare them
 
-    MidX = round(len(x) / 2)
-    MidY = round(len(y) / 2)
+    Full = len(x)
+    Mid = round(len(x) / 2)
+    mm = round(Mid/2)
+    mmm = round(mm/2)
 
     l = LinRegWork(Workers=[
-        LinWorker(x[MidX:], y[MidY:], 1.1, "Low Half"),
-        LinWorker(x[:MidX], y[:MidY], 1.2, "High Half"),
-        LinWorker(x, y, 0, "Full"),
+        LinWorker(x[0:mmm], y[0:mmm], 1.125, "1/8", Full),
+        LinWorker(x[mmm:mm], y[mmm:mm], 1.25, "2/8", Full),
+        LinWorker(x[mm:mm + mmm], y[mm:mm + mmm], 1.375, "3/4", Full),
+        LinWorker(x[mm + mmm:Mid], y[mm + mmm:Mid], 1.5, "4/8", Full),
+        LinWorker(x[Mid:Mid + mmm], y[Mid:Mid + mmm], 1.625, "5/8", Full),
+        LinWorker(x[Mid:mmm+Mid], y[Mid:mmm+Mid], 1.75, "6/8", Full),
+        LinWorker(x[mmm+Mid:mmm+Mid+mm],
+                  y[mmm+Mid:mmm+Mid+mm], 1.75, "7/8", Full),
+        LinWorker(x[mmm+mm+Mid:Full], y[mmm+mm+Mid:Full], 1.4, "4/4", Full),
+        LinWorker(x, y, 2, "Full", Full),
     ]
     )
 

@@ -44,12 +44,10 @@ def MakeGraph(Dat_x, Dat_y, XHigh, YHigh):
 
 if __name__ == "__main__":
 
-    Stockdepth = 4
+    Stockdepth = 2
     ticker = "AAPL"
 
     StockData = getData(ticker, Stockdepth)
-
-    print(StockData)
 
     X_DATA_LIST = []
     Y_DATA_LIST = [x for x in StockData if math.isnan(x) == False]
