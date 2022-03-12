@@ -44,9 +44,8 @@ def MakeGraph(Dat_x, Dat_y, XHigh, YHigh):
 
 if __name__ == "__main__":
 
-    Stockdepth = 2
+    Stockdepth = 4
     ticker = "AAPL"
-
 
     StockData = getData(ticker, Stockdepth)
 
@@ -60,9 +59,6 @@ if __name__ == "__main__":
     for i in range(len(Y_DATA_LIST)):
         X_DATA_LIST.append(i)
 
-    Work(X_DATA_LIST, Y_DATA_LIST, Depth=Stockdepth)
-
-    #print("Done Calculating : Accuracy Score : " + str(LinReg.GetAccuracy()))
-    #print("IQR Score : " + str(LinReg.GetInterRange()))
-
-    #MakeGraph(X_DATA_LIST, Y_DATA_LIST, max(X_DATA_LIST), max(Y_DATA_LIST))
+    print(f'Answer : {Work(X_DATA_LIST, Y_DATA_LIST, Depth=Stockdepth)}')
+    # Check wether we are accurate or not
+    # only send data with one value missing from the end

@@ -3,6 +3,8 @@ import sys
 import time
 import threading
 
+from app.calc.EvaluateWork import evalWork
+
 from ..calc.LinReg import SetLinearReg, GetReg
 
 # TODO add tasks for the bot to do
@@ -18,6 +20,7 @@ class LinWorker():
         self.Working = False
         self.TotalTime = 0
         self.LinDataCache = [0, 0, 0, 0, 0]
+        self.sol = 0
 
     def BeginTask(self):
 
@@ -30,6 +33,7 @@ class LinWorker():
 
         self.Working = False
         self.TotalTime = time.time() - self.TotalTime
+        self.sol = RetVal
 
         print(" " * 50, end="\r")
         print(
@@ -87,6 +91,8 @@ def Work(x, y, Depth):
     )
 
     l.Start()
+
+    return evalWork(l)
 
 
 # just in case i want to test from here to see if things are working proporly
